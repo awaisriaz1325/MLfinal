@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>House Price Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="page">
+        <div class="box">
+            <h1>House Price Prediction</h1>
+            <p class="subtitle">Awais Riaz & Hamayl Predictor!!!</p>
+
+            <form method="POST">
+                <div class="form-section">
+                    <h3>Basic Information</h3>
+
+                    <label for="area">Area (sq ft)</label>
+                    <input
+                        type="number"
+                        step="0.01"
+                        id="area"
+                        name="area"
+                        value="{{ form_data.area }}"
+                        required
+                    >
+
+                    <div class="two-col">
+                        <div>
+                            <label for="bedrooms">Bedrooms</label>
+                            <input
+                                type="number"
+                                id="bedrooms"
+                                name="bedrooms"
+                                min="0"
+                                value="{{ form_data.bedrooms }}"
+                                required
+                            >
+                        </div>
+
+                        <div>
+                            <label for="bathrooms">Bathrooms</label>
+                            <input
+                                type="number"
+                                id="bathrooms"
+                                name="bathrooms"
+                                min="0"
+                                value="{{ form_data.bathrooms }}"
+                                required
+                            >
+                        </div>
+                    </div>
+
+                    <label for="location">Location</label>
+                    <input
+                        type="text"
+                        id="location"
+                        name="location"
+                        list="location-list"
+                        value="{{ form_data.location }}"
+                        placeholder="Example: DHA Defence Phase 5, Islamabad"
+                        required
+                    >
+                </div>
+
+                <datalist id="location-list">
+                    {% for location in location_choices %}
+                        <option value="{{ location }}">
+                    {% endfor %}
+                </datalist>
+
+                <div class="form-section">
+                    <h3>Property Details</h3>
+
+                    <label for="property_type">Property Type</label>
+                    <select id="property_type" name="property_type">
+                        {% for property_type in property_type_choices %}
+                            <option
+                                value="{{ property_type }}"
+                                {% if form_data.property_type == property_type %}selected{% endif %}
+                            >
+                                {{ property_type }}
+                            </option>
+                        {% endfor %}
+                    </select>
+
+                    <div class="two-col">
+                        <div>
+                            <label for="built_year">Built Year</label>
+                            <input
+                                type="number"
+                                id="built_year"
+                                name="built_year"
+                                min="1900"
+                                max="2035"
+                                value="{{ form_data.built_year }}"
+                                placeholder="Optional"
+                            >
+                        </div>
+
+                        <div>
+                            <label for="floors">Floors</label>
+                            <input
+                                type="number"
+                                id="floors"
+                                name="floors"
+                                min="0"
+                                value="{{ form_data.floors }}"
+                            >
+                        </div>
+                    </div>
+
+                    <div class="two-col">
+                        <div>
+                            <label for="parking_spaces">Parking Spaces</label>
+                            <input
+                                type="number"
+                                id="parking_spaces"
+                                name="parking_spaces"
+                                min="0"
+                                value="{{ form_data.parking_spaces }}"
+                            >
+                        </div>
+
+                        <div>
+                            <label for="furnished">Furnished</label>
+                            <select id="furnished" name="furnished">
+                                <option value="0" {% if form_data.furnished == "0" %}selected{% endif %}>No</option>
+                                <option value="1" {% if form_data.furnished == "1" %}selected{% endif %}>Yes</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3>Rooms and Facilities</h3>
+
+                    <div class="two-col">
+                        <div>
+                            <label for="kitchens">Kitchens</label>
+                            <input
+                                type="number"
+                                id="kitchens"
+                                name="kitchens"
+                                min="0"
+                                value="{{ form_data.kitchens }}"
+                            >
+                        </div>
+
+                        <div>
+                            <label for="drawing_rooms">Drawing Rooms</label>
+                            <input
+                                type="number"
+                                id="drawing_rooms"
+                                name="drawing_rooms"
+                                min="0"
+                                value="{{ form_data.drawing_rooms }}"
+                            >
+                        </div>
+                    </div>
+
+                    <div class="two-col">
+                        <div>
+                            <label for="dining_rooms">Dining Rooms</label>
+                            <input
+                                type="number"
+                                id="dining_rooms"
+                                name="dining_rooms"
+                                min="0"
+                                value="{{ form_data.dining_rooms }}"
+                            >
+                        </div>
+
+                        <div>
+                            <label for="lounge_or_sitting_rooms">Lounges</label>
+                            <input
+                                type="number"
+                                id="lounge_or_sitting_rooms"
+                                name="lounge_or_sitting_rooms"
+                                min="0"
+                                value="{{ form_data.lounge_or_sitting_rooms }}"
+                            >
+                        </div>
+                    </div>
+
+                    <div class="two-col">
+                        <div>
+                            <label for="servant_quarters">Servant Quarters</label>
+                            <input
+                                type="number"
+                                id="servant_quarters"
+                                name="servant_quarters"
+                                min="0"
+                                value="{{ form_data.servant_quarters }}"
+                            >
+                        </div>
+
+                        <div>
+                            <label for="store_rooms">Store Rooms</label>
+                            <input
+                                type="number"
+                                id="store_rooms"
+                                name="store_rooms"
+                                min="0"
+                                value="{{ form_data.store_rooms }}"
+                            >
+                        </div>
+                    </div>
+
+                    <div class="two-col">
+                        <div>
+                            <label for="study_rooms">Study Rooms</label>
+                            <input
+                                type="number"
+                                id="study_rooms"
+                                name="study_rooms"
+                                min="0"
+                                value="{{ form_data.study_rooms }}"
+                            >
+                        </div>
+
+                        <div>
+                            <label for="prayer_rooms">Prayer Rooms</label>
+                            <input
+                                type="number"
+                                id="prayer_rooms"
+                                name="prayer_rooms"
+                                min="0"
+                                value="{{ form_data.prayer_rooms }}"
+                            >
+                        </div>
+                    </div>
+
+                    <div class="two-col">
+                        <div>
+                            <label for="powder_rooms">Powder Rooms</label>
+                            <input
+                                type="number"
+                                id="powder_rooms"
+                                name="powder_rooms"
+                                min="0"
+                                value="{{ form_data.powder_rooms }}"
+                            >
+                        </div>
+
+                        <div>
+                            <label for="laundry_rooms">Laundry Rooms</label>
+                            <input
+                                type="number"
+                                id="laundry_rooms"
+                                name="laundry_rooms"
+                                min="0"
+                                value="{{ form_data.laundry_rooms }}"
+                            >
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit">Predict Price</button>
+            </form>
+
+            {% if prediction %}
+                <div class="result">
+                    <p>Estimated House Price</p>
+                    <h2>{{ prediction }}</h2>
+                </div>
+            {% endif %}
+
+            {% if error %}
+                <div class="error">
+                    {{ error }}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
